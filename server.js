@@ -10,9 +10,11 @@ import store from "./src/store"; */
 import http from 'http';
 import { StaticRouter } from "react-router";
 import compression from 'compression'; 
-
+import jwt from 'jsonwebtoken';
+import {SECRET_KEY} from "./app/constants/constants";
 const app = express();
 const PORT=process.env.PORT||49840;
+const models = require(path.resolve(__dirname+"/app/config/config.js"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression()); 
@@ -41,7 +43,41 @@ app.get(['/','/api'],function (req, res) {
 });
 app.get(['/app.js','/user/profile/app.js'],function(req,res){
     res.sendFile(path.resolve(__dirname+'/build/app.js'))
+}); 
+const verifyToken=(req,res,next)=>{
+    const bearerHeader=req.headers['authorization'];
+
+    if(typeof bearerHeader!==undefined){
+      let bearerToken=bearerHeader.split(" ")[1];
+      req.token=bearerToken;
+      next();
+    }
+    else{
+      res.sendStatus(403);
+    }
+}
+app.get('/api/secure',verifyToken,(req,res)=>{
+  jwt.verify(req.token,SECRET_KEY,(error,authData)=>{
+      if(error){
+        res.sendStatus(403);
+      }
+      else{
+        res.json({
+          authData,
+          message:"Secured endpoint"
+        })
+      }
+  })
+  
 })
+require(path.resolve(__dirname+'/app/route/auth.route.js'))(app,path);
+
+models.sequelize.sync().then(function() {
+  console.log('http://localhost:'+PORT+' works')
+}).catch(function(err) {
+  console.log(err, "Something went wrong with the Database Update!")
+});
+
 http.createServer(app, (req, res) => {
     res.set({
       'Access-Control-Allow-Credentials': true,
