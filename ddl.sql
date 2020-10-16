@@ -1,7 +1,7 @@
-DROP DATABASE reactssr_pokedex;
+DROP DATABASE pokedex;
 
-CREATE Database reactssr_pokedex;
-use reactssr_pokedex;
+CREATE Database pokedex;
+use pokedex;
 
 DROP TABLE IF EXISTS USER;
 CREATE TABLE IF NOT EXISTS USER(
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS PLACE_POKEMON(
     CONSTRAINT FK_ID_Place_Pokemon FOREIGN KEY (id_place) REFERENCES PLACE(id) ON DELETE CASCADE
 );
 
-INSERT INTO `reactssr_pokedex`.`USER`(`id`,`firstname`,`lastname`,`username`,
+INSERT INTO `pokedex`.`USER`(`id`,`firstname`,`lastname`,`username`,
 `email`,`password_encrypted`,`password_iv`,`last_login`,
 `status`,`created_at`,`updated_at`)
 VALUES(1,'UserInvitedFirstName','InvitedLastName','UserInvited','userinvited@gmail.com',
