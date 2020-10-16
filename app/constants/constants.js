@@ -1,0 +1,2 @@
+const SECRET_KEY='5874hsjkdfhu842';
+exports.SECRET_KEY=SECRET_KEY;

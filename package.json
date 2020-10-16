@@ -1,0 +1,39 @@
+{
+  "name": "server-pokemon-app",
+  "version": "1.0.0",
+  "description": "Nodejs Server with Sequelize and MySQL",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeoCR/server-pokemon-app.git"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "nodejs",
+    "sequelize"
+  ],
+  "author": "laranibarsanchez@gmail.com",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/LeoCR/server-pokemon-app/issues"
+  },
+  "homepage": "https://github.com/LeoCR/server-pokemon-app#readme",
+  "devDependencies": {
+    "@material-ui/core": "^4.11.0",
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "css-loader": "^4.3.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.4",
+    "sequelize": "^6.3.5"
+  }
+}
