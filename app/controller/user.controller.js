@@ -8,106 +8,144 @@ const {SECRET_KEY} =require("../constants/constants");
 exports.findUserByEmail=async (req,res)=>{
     var email="";
     var pswd="";
-    if(req.body.email!==""){
-        email=req.body.email;
-    }
-    if(req.body.password!==""){
-        pswd=req.body.password;
-    }
-    return await User.findOne({ 
-        where: {
-            email: email
-        } 
-    }).then(userByEmail => {
-            if (!userByEmail) { 
-                res.json({user:"Email not found"})
-            }
-            else{
-                const encryptedPassword={
-                    password_encrypted:userByEmail.password_encrypted,
-                    password_iv:userByEmail.password_iv
-                }
-                let tempPswd=decrypt(encryptedPassword)
-                if(tempPswd===pswd){
-                    jwt.sign({ user:userByEmail }, SECRET_KEY,{expiresIn:'7 days'}, (err, token)=>{
-                        if(err){
-                            res.json({
-                                message:"An error occurs",
-                                error:err
-                            });
-                        }
-                        res.json({
-                            token,
-                            user:userByEmail
-                        })
-                    }); 
-                    
+    try {
+        if(req.body.email!==""){
+            email=req.body.email;
+        }
+        if(req.body.password!==""){
+            pswd=req.body.password;
+        }
+        return await User.findOne({ 
+            where: {
+                email: email
+            } 
+        }).then(userByEmail => {
+                if (!userByEmail) { 
+                    res.json({error:"Email not found"})
                 }
                 else{
-                    res.json({
-                        message:"Invalid Password"
-                    })
-                }
-                
-            } 
-    })
-    .catch((err)=>{
-        res.json({
-            error:"An error occurs",
-            message:err
+                    const encryptedPassword={
+                        password_encrypted:userByEmail.password_encrypted,
+                        password_iv:userByEmail.password_iv
+                    }
+                    let tempPswd=decrypt(encryptedPassword)
+                    if(tempPswd===pswd){
+                        jwt.sign({ user:userByEmail }, SECRET_KEY,{expiresIn:'7 days'}, (err, token)=>{
+                            if(err){
+                                res.json({
+                                    message:"An error occurs",
+                                    error:err
+                                });
+                            } 
+                            res.json({
+                                token/* ,
+                                user:userByEmail */
+                            })
+                        }); 
+                        
+                    }
+                    else{
+                        res.json({
+                            error:"Invalid Password"
+                        })
+                    }
+                    
+                } 
         })
-    })  
+        .catch((err)=>{
+            if(userName===null||userName===undefined){
+                res.json({
+                    error:"The Username is required"
+                })
+            }
+            if(pswd===null||pswd===undefined){
+                res.json({
+                    error:"The Password is required"
+                })
+            }
+            else{
+                res.json({
+                    error:err
+                })
+            }
+        }) 
+    } catch (error) {
+        res.json({
+            error
+        })
+    } 
 }
 exports.findUserByUsername=async (req,res)=>{
     var userName=""; 
-    var pswd="";
-    if(req.body.username!==""){
-        userName=req.body.username;
-    } 
-    if(req.body.password!==""){
-        pswd=req.body.password;
-    }
-    return await User.findOne({ 
-        where: {
-            username: userName
+    var pswd=""; 
+    try {
+        if(req.body.username!==""){
+            userName=req.body.username;
         } 
-    }).then(userByUsername => {
-            if (!userByUsername) { 
-                res.json({user:"Username not found"})
-            }
-            else{
-                const encryptedPassword={
-                    password_encrypted:userByUsername.password_encrypted,
-                    password_iv:userByUsername.password_iv
-                }
-                let tempPswd=decrypt(encryptedPassword)
-                if(tempPswd===pswd){
-                    jwt.sign({ user:userByUsername },SECRET_KEY,{expiresIn:'7 days'}, (err, token)=>{
-                        if(err){
-                            res.json({
-                                message:"An error occurs",
-                                error:err
-                            });
-                        }
-                        res.json({
-                            token,
-                            user:userByUsername
-                        })
-                    }); 
-                    
+        
+        if(req.body.password!==""){
+            pswd=req.body.password;
+        }
+        return await User.findOne({ 
+            where: {
+                username: userName
+            } 
+        }).then(userByUsername => {
+                if (!userByUsername) { 
+                    res.json({error:"Username not found"})
                 }
                 else{
-                    res.json({
-                        message:"Invalid Password"
-                    })
-                }
-            } 
-    })
-    .catch((err)=>{
-        res.json({
-            error:err
+                    const encryptedPassword={
+                        password_encrypted:userByUsername.password_encrypted,
+                        password_iv:userByUsername.password_iv
+                    }
+                    let tempPswd=decrypt(encryptedPassword)
+                    
+                    if(tempPswd===pswd){
+                        jwt.sign({ user:userByUsername },SECRET_KEY,{expiresIn:'7 days'}, (err, token)=>{
+                            if(err){
+                                res.json({
+                                    message:"An error occurs",
+                                    error:err
+                                });
+                            } 
+                            res.json({
+                                token/* ,
+                                user:userByUsername */
+                            })
+
+                        }); 
+                        
+                    }
+                    else{
+                        res.json({
+                            error:"Invalid Password"
+                        })
+                    }
+                } 
         })
-    })  
+        .catch((err)=>{
+            if(userName===null||userName===undefined){
+                    res.json({
+                        error:"The Username is required"
+                    })
+            }
+            if(pswd===null||pswd===undefined){
+                res.json({
+                    error:"The Password is required"
+                })
+            }
+            else{
+                res.json({
+                    error:err
+                })
+            }
+        }) 
+    } catch (error) {
+        res.json({
+            error
+        })
+    } 
 } 
 exports.createUser=async (req,res)=>{
     try {
@@ -132,8 +170,8 @@ exports.createUser=async (req,res)=>{
                     });
                 }
                 res.json({
-                    token,
-                    user:userCreated
+                    token/* ,
+                    user:userCreated */
                 })
             }); 	 
         }).catch(err => {

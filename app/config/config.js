@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const path = require('path');
-const sequelize = new Sequelize('reactssr_pokedex', 'root', '79461313', {
+const sequelize = new Sequelize('pokedex', 'root', '79461313', {
   host: 'localhost',
   dialect: 'mysql',
   define: {

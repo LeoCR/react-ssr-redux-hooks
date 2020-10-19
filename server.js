@@ -13,6 +13,11 @@ const {SECRET_KEY} =require("./app/constants/constants")
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression()); 
+app.use((req, res, next)=> {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 app.set('view engine', '.html');
 
 app.get(['/app.js','/user/profile/app.js'],function(req,res){
@@ -51,7 +56,9 @@ models.sequelize.sync().then(function() {
 }).catch(function(err) {
   console.log(err, "Something went wrong with the Database Update!")
 });
-
+/**
+ * @see https://github.com/expressjs/csurf
+ */
 http.createServer(app, (req, res) => {
     res.set({
       'Access-Control-Allow-Credentials': true,
