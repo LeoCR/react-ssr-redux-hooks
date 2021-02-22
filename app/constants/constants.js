@@ -1,2 +1,3 @@
-const SECRET_KEY='5874hsjkdfhu842';
-exports.SECRET_KEY=SECRET_KEY;
+require("dotenv").config();
+const SECRET_KEY = process.env.SECRET_KEY;
+exports.SECRET_KEY = SECRET_KEY;

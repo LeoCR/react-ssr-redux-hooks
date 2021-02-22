@@ -1,49 +1,49 @@
-module.exports = function(sequelize, Sequelize) {
-    var User = sequelize.define('USER', {
-        id: {
-            autoIncrement: true,
-            primaryKey: true,
-            type: Sequelize.INTEGER
-        },
-        firstname: {
-            type: Sequelize.STRING,
-            //notEmpty: true
-        },
-        lastname: {
-            type: Sequelize.STRING,
-            //notEmpty: true
-        },
-        username: {
-            type: Sequelize.TEXT
-        }, 
-        email: {
-            type: Sequelize.STRING,
-            validate: {
-                isEmail: true
-            }
-        },
-        password_encrypted: {
-            type: Sequelize.STRING//,
-            //allowNull: false
-        },
-        password_iv: {
-            type: Sequelize.STRING//,
-            //allowNull: false
-        },
-        last_login: {
-            type: Sequelize.DATE
-        },
+module.exports = function (sequelize, Sequelize) {
+  const User = sequelize.define("USER", {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER,
+    },
+    firstname: {
+      type: Sequelize.STRING,
+      //notEmpty: true
+    },
+    lastname: {
+      type: Sequelize.STRING,
+      //notEmpty: true
+    },
+    username: {
+      type: Sequelize.TEXT,
+    },
+    email: {
+      type: Sequelize.STRING,
+      validate: {
+        isEmail: true,
+      },
+    },
+    password_encrypted: {
+      type: Sequelize.STRING, //,
+      //allowNull: false
+    },
+    password_iv: {
+      type: Sequelize.STRING, //,
+      //allowNull: false
+    },
+    last_login: {
+      type: Sequelize.DATE,
+    },
 
-        status: {
-            type: Sequelize.ENUM('active', 'inactive'),
-            defaultValue: 'active'
-        },
-        created_at:{
-            type:Sequelize.DATE
-        }, 
-        updated_at:{
-            type:Sequelize.DATE
-        }
-    });
-    return User;
-}
+    status: {
+      type: Sequelize.ENUM("active", "inactive"),
+      defaultValue: "active",
+    },
+    created_at: {
+      type: Sequelize.DATE,
+    },
+    updated_at: {
+      type: Sequelize.DATE,
+    },
+  });
+  return User;
+};

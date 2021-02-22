@@ -24,12 +24,14 @@
     "url": "https://github.com/LeoCR/server-pokemon-app/issues"
   },
   "homepage": "https://github.com/LeoCR/server-pokemon-app#readme",
-  "devDependencies": {
+  "dependencies": {
     "@material-ui/core": "^4.11.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
+    "cors": "^2.8.5",
     "css-loader": "^4.3.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
