@@ -2,11 +2,11 @@ require("dotenv").config();
 const Sequelize = require("sequelize");
 const path = require("path");
 const sequelize = new Sequelize(
-  process.env.DATABASE_NAME,
-  process.env.DATABASE_USERNAME,
-  process.env.DATABASE_PASSWORD,
+  process.env.HEROKU_DATABASE,
+  process.env.HEROKU_USERNAME,
+  process.env.HEROKU_PASSWORD,
   {
-    host: process.env.DATABASE_HOST,
+    host: process.env.HEROKU_HOST,
     dialect: "mysql",
     define: {
       charset: "utf8",
