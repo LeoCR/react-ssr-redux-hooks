@@ -47,21 +47,21 @@ const verifyToken = (req, res, next) => {
 };
 app.get(["/", "/login"], function (req, res) {
   res.sendFile(
-    path.resolve(__dirname + "/../react-pokemon-ui/build/index.html")
+    path.resolve(__dirname + "/build/index.html")
   );
 });
 app.get(
   ["/dashboard", "/pokemons/:page", "/pokemons/", "/pokemon/:pokemon"],
-  //verifyToken,
+  verifyToken,
   function (req, res) {
     res.sendFile(
-      path.resolve(__dirname + "/../react-pokemon-ui/build/index.html")
+      path.resolve(__dirname + "/build/index.html")
     );
   }
 );
 
 app.use(
-  express.static(path.resolve(__dirname + "/../react-pokemon-ui/build/"))
+  express.static(path.resolve(__dirname + "/build/"))
 );
 app.get("/api/secure", verifyToken, (req, res) => {
   jwt.verify(req.token, SECRET_KEY, (error, authData) => {
